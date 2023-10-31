@@ -1,0 +1,87 @@
+﻿<UserControl x:Class="NCourseWork.Clients.Open.ClientView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:conv="clr-namespace:NCourseWork.Converters" 
+             d:DataContext="{d:DesignInstance Type=local:ClientViewModel}"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NCourseWork.Clients.Open"
+             mc:Ignorable="d" 
+             d:Background="#fff"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding GetClientDataCommand}"  />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <conv:BooleanToVisibilityConverter x:Key="BoolToVisConv" />
+        <conv:InverseBooleanToVisibilityConverter x:Key="InvBoolToVisConv" />
+    </UserControl.Resources>
+    <Grid>
+        <xctk:BusyIndicator IsBusy="{Binding IsDataLoading}">
+            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="400">
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="Client" />
+                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                            <Button Content="Update" Command="{Binding SetIsEditCommand, Mode=OneWay}" IsDefault="True" />
+                            <Button Content="Delete" Command="{Binding DeleteClientCommand}" />
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel Visibility="{Binding IsEdit, Converter={StaticResource BoolToVisConv}}" d:Visibility="Collapsed">
+                        <StackPanel>
+                            <TextBlock Text="First name" />
+                            <TextBox Text="{Binding InputData.FirstName, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+
+                        <StackPanel>
+                            <TextBlock Text="Last name" />
+                            <TextBox Text="{Binding InputData.LastName, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+
+                        <StackPanel>
+                            <TextBlock Text="Middle name" />
+                            <TextBox Text="{Binding InputData.MiddleName, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+
+                        <StackPanel>
+                            <TextBlock Text="Phone Number" />
+                            <TextBox Text="{Binding InputData.PhoneNumber, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+
+                        <StackPanel>
+                            <TextBlock Text="Address" />
+                            <TextBox Text="{Binding InputData.Address, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Button Content="Save" Command="{Binding SaveChangesStartCommand}" />
+                            <Button Content="Cancel" Grid.Column="1" Command="{Binding CancelChangesCommand}" />
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Visibility="{Binding IsEdit, Converter={StaticResource InvBoolToVisConv}}" d:Visibility="Visible">
+                        <TextBlock Text="{Binding ViewData.FirstName, StringFormat={}First Name: {0}}" />
+                        <TextBlock Text="{Binding ViewData.LastName, StringFormat={}Last Name: {0}}" />
+                        <TextBlock Text="{Binding ViewData.MiddleName, StringFormat={}Middle Name: {0}}" />
+                        <TextBlock Text="{Binding ViewData.PhoneNumber, StringFormat={}Phone Number: {0}}" />
+                        <TextBlock Text="{Binding ViewData.Address, StringFormat={}Address: {0}}" />
+                        <TextBlock Text="{Binding ViewData.StatusName, StringFormat={}Status: {0}}" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </xctk:BusyIndicator>
+    </Grid>
+</UserControl>

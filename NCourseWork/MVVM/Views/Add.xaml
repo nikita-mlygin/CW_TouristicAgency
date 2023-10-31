@@ -1,0 +1,32 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:country="clr-namespace:NCourseWork.Country.Add"
+                    xmlns:hotel="clr-namespace:NCourseWork.Hotel.Add"
+                    xmlns:purchase="clr-namespace:NCourseWork.Purchase.Add"
+                    xmlns:client="clr-namespace:NCourseWork.Clients.Add"
+                    xmlns:user="clr-namespace:NCourseWork.User"
+                    xmlns:tour="clr-namespace:NCourseWork.Tour.Add">
+    <DataTemplate DataType="{x:Type country:AddCountryViewModel}">
+        <country:AddCountryView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type hotel:AddHotelViewModel}">
+        <hotel:AddHotelView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type tour:AddTourViewModel}">
+        <tour:AddTourView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type purchase:AddPurchaseViewModel}">
+        <purchase:AddPurchaseView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type client:AddClientViewModel}">
+        <client:AddClientView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type user:UserViewModel}">
+        <user:UserView />
+    </DataTemplate>
+</ResourceDictionary>

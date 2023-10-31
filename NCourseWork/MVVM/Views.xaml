@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:CourseworkApp.ViewModel"
+                    xmlns:section_vm="clr-namespace:CourseworkApp.ViewModels.Section"
+                    xmlns:v="clr-namespace:CourseworkApp.View"
+                    xmlns:tv="clr-namespace:CourseworkApp.View.Tables">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/MVVM/Views/OpenView.xaml" />
+        <ResourceDictionary Source="/MVVM/Views/Section.xaml" />
+        <ResourceDictionary Source="/MVVM/Views/Select.xaml" />
+        <ResourceDictionary Source="/MVVM/Views/Table.xaml" />
+        <ResourceDictionary Source="/MVVM/Views/Add.xaml" />
+        <ResourceDictionary Source="/MVVM/Views/Update.xaml" />
+        <ResourceDictionary Source="/MVVM/Views/Layout.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

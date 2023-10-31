@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="NCourseWork.Purchase.Open.PurchaseView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:conv="clr-namespace:NCourseWork.Converters"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NCourseWork.Purchase.Open" d:DataContext="{d:DesignInstance Type=local:PurchaseViewModel}"
+             mc:Ignorable="d" 
+             d:Background="#fff" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding GetDataCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <conv:BooleanToVisibilityConverter x:Key="BoolToVisConv" />
+        <conv:InverseBooleanToVisibilityConverter x:Key="InvBoolToVisConv" />
+    </UserControl.Resources>
+    <Grid>
+        <xctk:BusyIndicator>
+            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="400">
+                    <Grid HorizontalAlignment="Stretch" Margin="0 0 0 20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="Purchase" FontSize="18" FontWeight="Bold" />
+                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                            <Button Content="Update" Command="{Binding StartEditCommand, Mode=OneWay}" IsDefault="True" />
+                            <Button Content="Delete" />
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel Visibility="{Binding IsEdit, Converter={StaticResource BoolToVisConv}}" d:Visibility="Collapsed">
+                        <StackPanel>
+                            <TextBlock>
+                                <TextBlock Text="Selected tour: " />
+                                <Button Content="Browse" Command="{Binding SelectTourCommand}" Style="{StaticResource LinkButton}" Padding="0" />
+                            </TextBlock>
+                            <TextBlock DataContext="{Binding UpdateInfo.SelectedTourViewInfo}">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} ({1}): {2}$">
+                                        <Binding Path="HotelFullInfo.Country.Name" />
+                                        <Binding Path="HotelFullInfo.HotelName" />
+                                        <Binding Path="PricePerWeek" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <StackPanel>
+                            <TextBlock Text="Weel Count:" />
+                            <TextBox Text="{Binding UpdateInfo.WeekCount, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+
+                        <TextBlock Text="{Binding UpdateInfo.NewTotalPrice, StringFormat=New price: {0}}" />
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Button Content="Save" Command="{Binding SaveCommand}" />
+                            <Button Content="Cancel" Grid.Column="1" Command="{Binding CancelEditCommand}" />
+                        </Grid>
+                    </StackPanel> 
+                    <StackPanel Visibility="{Binding IsEdit, Converter={StaticResource InvBoolToVisConv}}" d:Visibility="Visible">
+                        <TextBlock Text="{Binding Info.ClientFullInfo.ClientInfo.FirstName, StringFormat={}First name: {0}}" />
+                        <TextBlock Text="{Binding Info.ClientFullInfo.ClientInfo.LastName, StringFormat={}Last name: {0}}" />
+                        <TextBlock Text="{Binding Info.ClientFullInfo.ClientInfo.MiddleName, StringFormat={}Middle name: {0}}" />
+                        <TextBlock Text="{Binding Info.PurchaseDate, StringFormat={}Purchase date: {0}}" />
+                        <TextBlock Text="{Binding Info.TourFullInfo.HotelFullInfo.HotelName, StringFormat={}Hotel: {0}}" />
+                        <TextBlock Text="{Binding Info.TourFullInfo.PricePerWeek, StringFormat={}Price per week: {0}$/week}" />
+                        <TextBlock Text="{Binding Info.TourFullInfo.HotelFullInfo.Country.Name, StringFormat={}Country: {0}}" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </xctk:BusyIndicator>
+    </Grid>
+</UserControl>

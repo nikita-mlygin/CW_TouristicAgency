@@ -1,0 +1,90 @@
+﻿<UserControl x:Class="NCourseWork.Hotel.List.HotelListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:conv="clr-namespace:NCourseWork.Converters" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NCourseWork.Hotel.List" d:DataContext="{d:DesignInstance Type=local:HotelListViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding GetDataCommand}"  />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <conv:BooleanToVisibilityConverter x:Key="BoolToVisConv" />
+        <conv:InverseBooleanToVisibilityConverter x:Key="InvBoolToVisConv" />
+    </UserControl.Resources>
+    <Grid>
+        <xctk:BusyIndicator IsBusy="{Binding UpdateDataCommand.IsRunning}">
+            <StackPanel Width="600" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Grid Margin="0 5 0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Margin="0 0 5 0">
+                        <TextBlock Text="Name filter:" />
+                        <TextBox AcceptsReturn="False"  Text="{Binding HotelNameFilter}" AutomationProperties.HelpText="Name filter" />
+                    </StackPanel>
+
+                    <StackPanel Margin="5 0" Grid.Column="1">
+                        <TextBlock Text="Status filter:" />
+                        <ComboBox ItemsSource="{Binding HotelClassFilterComboBox}" SelectedItem="{Binding HotelClassFilterComboBoxSelectedItem}" DisplayMemberPath="Name" />
+                    </StackPanel>
+
+                    <StackPanel Margin="5 0 0 0" Grid.Column="2">
+                        <TextBlock Text="Country filter:" />
+                        <ComboBox
+                            IsTextSearchEnabled="False"
+                            IsEditable="True"
+                            
+                            ItemsSource="{Binding CountryFilterComboBox.VisibleValues}"
+                            SelectedItem="{Binding CountryFilterComboBox.SelectedItem}"
+                            Text="{Binding CountryFilterComboBox.SearchString}"
+                            
+                            DisplayMemberPath="Name"/>
+                    </StackPanel>
+                </Grid>
+
+                <StackPanel Orientation="Horizontal">
+                    <Button IsDefault="True" HorizontalAlignment="Left" Padding="10 4" Grid.Column="1" Content="Filter" Command="{Binding UpdateDataCommand}" />
+                    <Button Content="X" Padding="5 0" Command="{Binding ResetFilterCommand}" VerticalAlignment="Center" Margin="5 0 0 0" Visibility="{Binding IsFilter, Converter={StaticResource BoolToVisConv}}" />
+                </StackPanel>
+
+                <ListView Margin="0 20 0 0" ItemsSource="{Binding HotelList}" MinHeight="100" MaxHeight="150">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ContentControl HorizontalAlignment="Stretch">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseUp">
+                                        <i:InvokeCommandAction Command="{Binding DataContext.OpenHotelCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding Id}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="{Binding HotelName}" />
+                                    <Button Width="Auto" Grid.Column="2" Content="Delete" Padding="10 5" Command="{Binding DataContext.DeleteHotelCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding Id}" />
+                                </Grid>
+                            </ContentControl>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button Padding="10 5" Content="Add" Margin="0 20 0 0" HorizontalAlignment="Right" Command="{Binding CreateCommand}" />
+            </StackPanel>
+        </xctk:BusyIndicator>
+    </Grid>
+</UserControl>

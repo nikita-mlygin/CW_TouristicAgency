@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="NCourseWork.Purchase.Add.AddPurchaseView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:conv="clr-namespace:NCourseWork.Converters"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NCourseWork.Purchase.Add" d:DataContext="{d:DesignInstance Type=local:AddPurchaseViewModel}"
+             mc:Ignorable="d" 
+             d:Background="#fff"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding GetDataCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <conv:BooleanToVisibilityConverter x:Key="BoolToVisConv" />
+        <conv:InverseBooleanToVisibilityConverter x:Key="InvBoolToVisConv" />
+    </UserControl.Resources>
+    <Grid>
+        <StackPanel Width="400" VerticalAlignment="Center">
+            <StackPanel>
+                <TextBlock Text="Select client:" Margin="0 0 0 5" />
+                <ComboBox
+                    IsEditable="True"
+                    IsTextSearchEnabled="False"
+    
+                    ItemsSource="{Binding ClientComboBox.VisibleValues}"
+                    SelectedItem="{Binding ClientComboBox.SelectedItem}"
+                    Text="{Binding ClientComboBox.SearchString}"
+    
+                    DisplayMemberPath="Name"
+                />
+                <TextBlock Margin="0 3 0 0" Text="Client Discoutn: 5%" />
+            </StackPanel>
+            <StackPanel Margin="0 10 0 0">
+                <TextBlock>
+                    <TextBlock Text="Selected tour: " />
+                    <Button Content="Browse" Command="{Binding SelectTourCommand}" Style="{StaticResource LinkButton}" Padding="0" />
+                </TextBlock>
+                <TextBlock DataContext="{Binding SelectedTour}">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} ({1}): {2}$">
+                            <Binding Path="HotelFullInfo.Country.Name" />
+                            <Binding Path="HotelFullInfo.HotelName" />
+                            <Binding Path="PricePerWeek" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </StackPanel>
+            <StackPanel Margin="0 10 0 0">
+                <TextBlock>
+                    <TextBlock Margin="0 0 0 5" Text="Week count: " />
+                </TextBlock>
+                <TextBox Text="{Binding WeekCount}" />
+            </StackPanel>
+            <Grid Height="40" Margin="0 20 0 0">
+                <Grid.ColumnDefinitions> 
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Button Content="Cancel" Command="{Binding CancelCommand}" />
+                <Button Content="Add" Command="{Binding AddCommand}" Grid.Column="1" />
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>

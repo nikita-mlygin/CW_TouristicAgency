@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:stepNav="clr-namespace:NCourseWork.Common.Layouts.StepNavigation"
+    xmlns:nav="clr-namespace:NCourseWork.Common.Layouts.Navigation">
+    <DataTemplate DataType="{x:Type stepNav:StepNavigationLayout}">
+        <stepNav:StepNavigationLayoutView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type nav:NavigationLayout}">
+        <nav:NavigationLayoutView />
+    </DataTemplate>
+</ResourceDictionary>

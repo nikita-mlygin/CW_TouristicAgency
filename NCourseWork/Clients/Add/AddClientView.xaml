@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="NCourseWork.Clients.Add.AddClientView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:conv="clr-namespace:NCourseWork.Converters"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NCourseWork.Clients.Add" d:DataContext="{d:DesignInstance Type=local:AddClientViewModel}"
+             mc:Ignorable="d" 
+             d:Background="#fff"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <conv:BooleanToVisibilityConverter x:Key="BoolToVisConv" />
+        <conv:InverseBooleanToVisibilityConverter x:Key="InvBoolToVisConv" />
+    </UserControl.Resources>
+    <Grid>
+        <StackPanel Width="400" VerticalAlignment="Center">
+            <TextBlock FontSize="18" FontWeight="Bold" Text="Add client" Margin="0 0 0 20" />
+
+            <StackPanel>
+                <TextBlock Text="First name:" Margin="0 0 5 0" />
+                <TextBox Text="{Binding FirstName}" />
+            </StackPanel>
+
+            <StackPanel Margin="0 10 0 0">
+                <TextBlock Text="Last name:" Margin="0 0 5 0" />
+                <TextBox Text="{Binding LastName}" />
+            </StackPanel>
+
+            <StackPanel Margin="0 10 0 0">
+                <TextBlock Text="Middle name:" Margin="0 0 5 0" />
+                <TextBox Text="{Binding MiddleName}" />
+            </StackPanel>
+
+            <StackPanel Margin="0 10 0 0">
+                <TextBlock Text="PhoneNumber:" Margin="0 0 5 0" />
+                <TextBox Text="{Binding PhoneNumber}" />
+            </StackPanel>
+
+            <StackPanel Margin="0 10 0 0">
+                <TextBlock Text="Address:" Margin="0 0 5 0" />
+                <TextBox Text="{Binding Address}" />
+            </StackPanel>
+
+            <Grid Height="40" Margin="0 20 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Button Content="Cancel" Command="{Binding CancelCommand}" />
+                <Button Grid.Column="1" Command="{Binding AddCommand}" Content="Add" />
+            </Grid>
+        </StackPanel>     
+    </Grid>
+</UserControl>
